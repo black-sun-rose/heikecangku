@@ -1,0 +1,86 @@
+#!/bin/bash
+gg=0
+oo=0
+hh=1
+jj=0
+while [ $hh -lt 4 ]
+do
+
+[ $hh -lt 2 ] && read -p "请输入石头,剪刀,布 :" q  || read -p "请再输入石
+头,剪刀,布 :" q
+#read -p "请输入石头(1),剪刀(2),布(3) :" a
+if [ "$q" == "石头" ];then
+k=1
+elif [ "$q" == "剪刀" ];then
+k=2
+else
+k=3
+fi
+
+a=$[RANDOM%3+1]
+if [ $a -eq 1 ];then
+echo "系统出石头"
+elif [ $a -eq 2 ];then
+echo "系统出剪刀"
+else
+echo "系统出布"
+fi
+
+case $a in
+1)
+if [ $k -eq 1 ];then
+echo "第$[hh+jj]局平局"
+[ "$oo" -gt 1 -o "$gg" -gt 1 ] && break
+let jj+=1
+elif [ $[k-1] -eq 1 ];then
+echo "第$[hh+jj]局系统赢了"
+let hh+=1
+let gg+=1
+[ "$oo" -gt 1 -o "$gg" -gt 1 ] && break
+else
+  echo "第$[hh+jj]局你赢了"
+let hh+=1
+let oo+=1
+[ "$oo" -gt 1 -o "$gg" -gt 1 ] && break
+fi;;
+2)
+if [ $[k+1] -eq 2 ];then
+echo "第$[hh+jj]局我赢了"
+let hh+=1
+let oo+=1
+[ "$oo" -gt 1 -o "$gg" -gt 1 ] && break
+elif [ $k -eq 2 ];then
+echo "第$[hh+jj]局平局"
+[ "$oo" -gt 1 -o "$gg" -gt 1 ] && break
+let jj+=1
+else
+  echo "第$[hh+jj]局系统赢了"
+let hh+=1
+let gg+=1
+[ "$oo" -gt 1 -o "$gg" -gt 1 ] && break
+fi;;
+*)
+if [ $k -eq 3 ];then
+echo "第$[hh+jj]局平局"
+[ "$oo" -gt 1 -o "$gg" -gt 1 ] && break
+let jj+=1
+elif [ $[k+1] -lt 3 ];then
+echo "第$[hh+jj]局系统赢了"
+let hh+=1
+let gg+=1
+[ "$oo" -gt 1 -o "$gg" -gt 1 ] && break
+else
+  echo "第$[hh+jj]局你赢了"
+let hh+=1
+let oo+=1
+[ "$oo" -gt 1 -o "$gg" -gt 1 ] && break
+fi
+esac
+done
+
+if [ "$gg" -gt "$oo" ];then
+echo "系统赢${gg}局"
+#echo "系统选择你吃`/mnt/hh`"
+else
+echo "你赢了${oo}局"
+fi
